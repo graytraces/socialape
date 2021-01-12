@@ -8,7 +8,7 @@ const {
   commentOnScream,
   likeScream,
   unlikeScream,
-  deleteScream
+  deleteScream,
 } = require("./handlers/scream");
 const {
   signup,
@@ -19,6 +19,8 @@ const {
 } = require("./handlers/users");
 
 const FBAuth = require("./util/fbAuth");
+
+const { db } = require("./util/admin");
 
 //scream routes
 app.get("/screams", getAllScreams);
@@ -54,3 +56,75 @@ AKA middleware
 */
 
 exports.api = functions.region("asia-northeast3").https.onRequest(app);
+
+exports.createNotificationOnLike = functions
+  .region("asia-northeast3")
+  .firestore.document("likes/{id}")
+  .onCreate((snapshot) => {
+    db.doc(`/screams/${snapshot.data().screamId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            recipient: doc.data().userHandle,
+            sender: snapshot.data().userHandle,
+            read: "false",
+            screamId: doc.id,
+            type: "like",
+            createdAt: new Date().toISOString(),
+          });
+        }
+      })
+      .then(() => {
+        return; //DB Trigger. Not need to send result
+      })
+      .catch((err) => {
+        console.error(err);
+        return; //DB Trigger. Not need to send result
+      });
+  });
+
+exports.createNotificationOnUnLike = functions
+  .region("asia-northeast3")
+  .firestore.document("likes/{id}")
+  .onDelete((snapshot) => {
+    db.doc(`/screams/${snapshot.data().screamId}`)
+      .get()
+      .then((doc) => {
+        db.doc(`/notifications/${snapshot.id}`).delete();
+      })
+      .then(() => {
+        return; //DB Trigger. Not need to send result
+      })
+      .catch((err) => {
+        console.error(err);
+        return; //DB Trigger. Not need to send result
+      });
+  });
+
+exports.createNotificationOnComment = functions
+  .region("asia-northeast3")
+  .firestore.document("comments/{id}")
+  .onCreate((snapshot) => {
+    db.doc(`/screams/${snapshot.data().screamId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return db.doc(`/notifications/${snapshot.id}`).set({
+            recipient: doc.data().userHandle,
+            sender: snapshot.data().userHandle,
+            read: "false",
+            screamId: doc.id,
+            type: "comment",
+            createdAt: new Date().toISOString(),
+          });
+        }
+      })
+      .then(() => {
+        return; //DB Trigger. Not need to send result
+      })
+      .catch((err) => {
+        console.error(err);
+        return; //DB Trigger. Not need to send result
+      });
+  });
