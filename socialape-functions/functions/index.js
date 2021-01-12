@@ -1,7 +1,15 @@
 const functions = require("firebase-functions");
 const app = require("express")();
 
-const { getAllScreams, postOneScream, getScream, commentOnScream } = require("./handlers/scream");
+const {
+  getAllScreams,
+  postOneScream,
+  getScream,
+  commentOnScream,
+  likeScream,
+  unlikeScream,
+  deleteScream
+} = require("./handlers/scream");
 const {
   signup,
   login,
@@ -15,12 +23,15 @@ const FBAuth = require("./util/fbAuth");
 //scream routes
 app.get("/screams", getAllScreams);
 app.post("/scream", FBAuth, postOneScream); //여러개 체이닝으로 가능하지만 지금은 하나만 쓸거야
-app.get("/scream/:screamId", getScream );
+app.get("/scream/:screamId", getScream);
 // TODO : delete scream
+app.delete("/scream/:screamId", FBAuth, deleteScream);
 // TODO : like a scream
+app.get("/scream/:screamId/like", FBAuth, likeScream);
 // TODO : unlike a scream
+app.get("/scream/:screamId/unlike", FBAuth, unlikeScream);
 // TODO : comment on scream
-app.post("/scream/:screamId/comment", FBAuth, commentOnScream)
+app.post("/scream/:screamId/comment", FBAuth, commentOnScream);
 
 //users routes
 app.post("/signup", signup);
