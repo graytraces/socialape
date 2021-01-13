@@ -16,6 +16,8 @@ const {
   uploadImage,
   addUserDetails,
   getAuthenticatedUser,
+  getUserDetail,
+  markNotificationRead,
 } = require("./handlers/users");
 
 const FBAuth = require("./util/fbAuth");
@@ -41,6 +43,8 @@ app.post("/login", login);
 app.post("/user/image", FBAuth, uploadImage);
 app.post("/user", FBAuth, addUserDetails);
 app.get("/user", FBAuth, getAuthenticatedUser);
+app.get("/user/:handle", getUserDetail);
+app.post("/notifications", FBAuth, markNotificationRead);
 
 //리퀘스트를 가로채고, 요청이 뭔가를 가지고 있는지,
 //muiltiple router에
