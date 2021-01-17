@@ -3,14 +3,12 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import EditDetails from "../component/EditDetails"
+import EditDetails from "../component/EditDetails";
 
 // MUI stuff
 import {
   Button,
-  IconButton,
   Paper,
-  Tooltip,
   Typography,
 } from "@material-ui/core";
 import MuiLink from "@material-ui/core/Link";
@@ -22,7 +20,8 @@ import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 //Redux
 import { connect } from "react-redux";
-import {logoutUser, uploadImage} from "../redux/actions/userActions";
+import { logoutUser, uploadImage } from "../redux/actions/userActions";
+import MyButton from "../util/MyButton";
 
 const styles = (theme) => ({
   paper: {
@@ -87,8 +86,8 @@ class Profile extends Component {
   };
 
   handleLogout = () => {
-      this.props.logoutUser();
-  }
+    this.props.logoutUser();
+  };
 
   render() {
     const {
@@ -112,11 +111,13 @@ class Profile extends Component {
                 hidden="hidden"
                 onChange={this.handleImageChange}
               />
-              <Tooltip title="Edit profile picture" placement="top">
-                <IconButton onClick={this.handleEditPicture} className="button">
-                  <EditIcon color="primary" />
-                </IconButton>
-              </Tooltip>
+              <MyButton
+                tip="Edit profile picture"
+                onClick={this.handleEditPicture}
+                btnClassName="button"
+              >
+                <EditIcon color="primary" />
+              </MyButton>
             </div>
             <hr />
             <MuiLink
@@ -151,14 +152,10 @@ class Profile extends Component {
             <span> Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             <div className="profile-details"></div>
 
-            <Tooltip title="Logout" placement="top">
-                <IconButton onClick={this.handleLogout}>
-                    <KeyboardReturn color="primary"/>
-                </IconButton>
-            </Tooltip>
-            <EditDetails>
-
-            </EditDetails>
+            <MyButton tip="Logout" onClick={this.handleLogout}>
+              <KeyboardReturn color="primary" />
+            </MyButton>
+            <EditDetails></EditDetails>
           </div>
         </Paper>
       ) : (
@@ -198,18 +195,19 @@ const mapStatToProps = (state) => ({
   user: state.user,
 });
 
-
-
 const mapActionsToProps = {
-    logoutUser, uploadImage,
-  };
-  
+  logoutUser,
+  uploadImage,
+};
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  uploadIage: PropTypes.func.isRequired
+  uploadIage: PropTypes.func.isRequired,
 };
 
-export default connect(mapStatToProps, mapActionsToProps)(withStyles(styles)(Profile));
+export default connect(
+  mapStatToProps,
+  mapActionsToProps
+)(withStyles(styles)(Profile));
