@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { Component } from "react";
 
 import Scream from '../component/Scream';
+import Profile from '../component/Profile';
 
 class home extends Component {
   state = {
@@ -35,7 +36,7 @@ class home extends Component {
           {recentScreamsMarkup}
         </Grid>
         <Grid item sm={4} xs={12}>
-          <p>Profile...</p>
+          <Profile/>
         </Grid>
       </Grid>
     );
