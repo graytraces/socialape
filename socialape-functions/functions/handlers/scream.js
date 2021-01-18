@@ -129,7 +129,7 @@ exports.likeScream = (req, res) => {
     .then((doc) => {
       if (doc.exists) {
         screamData = doc.data();
-        screamData.id = doc.id;
+        screamData.screamId = doc.id;
         return likeDocument.get();
       } else {
         return res.status(404).json({ error: "Scream not found" });
@@ -175,7 +175,7 @@ exports.unlikeScream = (req, res) => {
     .then((doc) => {
       if (doc.exists) {
         screamData = doc.data();
-        screamData.id = doc.id;
+        screamData.screamId = doc.id;
         return likeDocument.get();
       } else {
         return res.status(404).json({ error: "Scream not found" });
