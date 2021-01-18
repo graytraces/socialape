@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-//MUI import
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
-import ChatIcon from "@material-ui/icons/Chat";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -15,9 +8,18 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { connect } from "react-redux";
 import { likeScream, unlikeScream } from "../redux/actions/dataActions";
 import MyButton from "../util/MyButton";
+import DeleteScream from "./DeleteScream";
+
+//MUI import
+import withStyles from "@material-ui/core/styles/withStyles";
+import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
+import ChatIcon from "@material-ui/icons/Chat";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const styles = {
   card: {
+    position:"relative",
     display: "flex",
     marginBottom: 20,
   },
@@ -66,7 +68,10 @@ class Scream extends Component {
         likeCount,
         commentCount,
       },
-      user: { authenticated },
+      user: {
+        authenticated,
+        credentials: { handle },
+      },
     } = this.props;
 
     const likeButton = !authenticated ? (
@@ -85,6 +90,11 @@ class Scream extends Component {
       </MyButton>
     );
 
+    const deleteButton =
+      authenticated && userHandle === handle ? (
+        <DeleteScream screamId={screamId} />
+      ) : null;
+
     return (
       <Card className={classes.card}>
         <CardMedia
@@ -101,6 +111,7 @@ class Scream extends Component {
           >
             {userHandle}
           </Typography>
+          {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
