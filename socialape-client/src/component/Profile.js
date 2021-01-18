@@ -204,7 +204,7 @@ Profile.propTypes = {
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  uploadIage: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired,
 };
 
 export default connect(

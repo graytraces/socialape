@@ -72,7 +72,11 @@ class EditDetails extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <MyButton tip="Edit detils" onClick={this.handleOpen} btnClassName={classes.button}>
+        <MyButton
+          tip="Edit detils"
+          onClick={this.handleOpen}
+          btnClassName={classes.button}
+        >
           <EditIcon color="primary" />
         </MyButton>
         <Dialog
@@ -141,7 +145,6 @@ const mapActionsToProps = {
 };
 
 EditDetails.propTypes = {
-  editUserDetials: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
