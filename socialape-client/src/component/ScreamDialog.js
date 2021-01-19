@@ -19,10 +19,12 @@ import Typhograpy from "@material-ui/core/Typography";
 //MUI ICONS
 import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
+import ChatIcon from "@material-ui/icons/Chat";
 
 import { connect } from "react-redux";
 import { getScream } from "../redux/actions/dataActions";
 import MyButton from "../util/MyButton";
+import LikeButton from "./LikeButton";
 
 const styles = (theme) => ({
   ...theme.custom,
@@ -39,9 +41,18 @@ const styles = (theme) => ({
   dialogContent: {
     padding: 20,
   },
-  closeButton:{
-      position:"absolute",
-      left:"90%"
+  closeButton: {
+    position: "absolute",
+    left: "90%",
+  },
+  expandButton: {
+    position: "absolute",
+    left: "90%",
+  },
+  spinnerDiv:{
+      textAlign: "center",
+      marginTop:50,
+      marginBottom:50
   }
 });
 
@@ -75,7 +86,9 @@ class ScreamDialog extends Component {
     } = this.props;
 
     const dialogMarkup = loading ? (
-      <CircularProgress size={200} />
+      <div className={classes.spinnerDiv} >
+        <CircularProgress size={200} thickness={2} />
+      </div>
     ) : (
       <Grid container spacing={6}>
         <Grid item sm={5}>
@@ -96,6 +109,12 @@ class ScreamDialog extends Component {
           </Typhograpy>
           <hr className={classes.invisibleSeperator} />
           <Typhograpy variant="body1">{body}</Typhograpy>
+          <LikeButton screamId={screamId}/>
+          <span>{likeCount} likes</span>
+          <MyButton tip="comments">
+            <ChatIcon color="primary" />
+          </MyButton>
+          <span>{commentCount} comments </span>
         </Grid>
       </Grid>
     );
@@ -105,7 +124,7 @@ class ScreamDialog extends Component {
         <MyButton
           onClick={this.handleOpen}
           tip="Expand Scream"
-          tipClassname={classes.expandButton}
+          tipClassName={classes.expandButton}
         >
           <UnfoldMore color="primary" />
         </MyButton>
