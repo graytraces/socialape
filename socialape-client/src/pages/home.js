@@ -1,10 +1,9 @@
 import { Grid } from "@material-ui/core";
-import axios from "axios";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Scream from "../component/Scream";
-import Profile from "../component/Profile";
+import Scream from "../component/scream/Scream";
+import Profile from "../component/profile/Profile";
 
 import { connect } from "react-redux";
 import { getScreams } from "../redux/actions/dataActions";

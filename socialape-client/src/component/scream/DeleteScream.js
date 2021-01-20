@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Button, Dialog, DialogTitle, DialogActions } from "@material-ui/core";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
 import { connect } from "react-redux";
-import { deleteScream } from "../redux/actions/dataActions";
+import { deleteScream } from "../../redux/actions/dataActions";
 
 const styles = { deleteButton: {
     position:"absolute",
