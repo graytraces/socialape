@@ -10,7 +10,7 @@ import PostScream from "../scream/PostScream";
 import { connect } from "react-redux";
 
 import HomeIcon from "@material-ui/icons/Home";
-import Notifications from "@material-ui/icons/Notifications";
+import Notifications from "./Notifications";
 
 //{} 쓰면 전체를 로딩하니 그러지 말자
 
@@ -28,9 +28,7 @@ class Navbar extends Component {
                   <HomeIcon color="primary" />
                 </MyButton>
               </Link>
-              <MyButton tip="Notifications">
-                <Notifications color="primary" />
-              </MyButton>
+              <Notifications />
             </Fragment>
           ) : (
             <Fragment>
