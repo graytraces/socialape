@@ -20,6 +20,8 @@ import Navbar from "./component/layout/Navbar";
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+import user from "./pages/user";
+
 import axios from "axios";
 
 const theme = createMuiTheme(themeFile);
@@ -31,8 +33,8 @@ if (token) {
     store.dispatch(logoutUser());
     window.location.href = "/login";
   } else {
-    store.dispatch({type: SET_AUTHENTICATED});
-    axios.defaults.headers.common['Authorization'] = token;
+    store.dispatch({ type: SET_AUTHENTICATED });
+    axios.defaults.headers.common["Authorization"] = token;
     store.dispatch(getUserData());
   }
 }
@@ -47,16 +49,9 @@ export class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={home}></Route>
-                <AuthRoute
-                  exact
-                  path="/login"
-                  component={login}
-                />
-                <AuthRoute
-                  exact
-                  path="/signup"
-                  component={signup}
-                />
+                <AuthRoute exact path="/login" component={login} />
+                <AuthRoute exact path="/signup" component={signup} />
+                <Route exact path='/users/:handle' component={user} />
               </Switch>
             </div>
           </Router>

@@ -238,7 +238,10 @@ exports.getUserDetail = (req, res) => {
     .then((data) => {
       userData.screams = [];
       data.forEach((doc) => {
-        userData.screams.push(doc.data());
+        userData.screams.push({
+          ...doc.data(),
+          screamId: doc.id,
+        });
       });
 
       return res.json(userData);
