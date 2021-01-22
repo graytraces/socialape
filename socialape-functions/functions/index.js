@@ -24,6 +24,10 @@ const FBAuth = require("./util/fbAuth");
 
 const { db } = require("./util/admin");
 
+
+const cors = require("cors");
+app.use(cors());
+
 //scream routes
 app.get("/screams", getAllScreams);
 app.post("/scream", FBAuth, postOneScream); //여러개 체이닝으로 가능하지만 지금은 하나만 쓸거야

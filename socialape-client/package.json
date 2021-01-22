@@ -45,4 +45,5 @@
     ]
   },
   "proxy": "https://asia-northeast3-socialape-3cf82.cloudfunctions.net/api"
+  
 }
