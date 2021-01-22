@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import Scream from "../component/scream/Scream";
 import Profile from "../component/profile/Profile";
+import ScreamSkeleton from "../util/ScreamSkeleton";
 
 import { connect } from "react-redux";
 import { getScreams } from "../redux/actions/dataActions";
@@ -21,7 +22,7 @@ class home extends Component {
         <Scream key={scream.screamId} scream={scream} />
       ))
     ) : (
-      <p>Loading...</p>
+      <ScreamSkeleton/>
     );
 
     return (
