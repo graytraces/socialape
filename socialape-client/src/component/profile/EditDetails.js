@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -23,118 +23,118 @@ const styles = (theme) => ({
   },
 });
 
-class EditDetails extends Component {
-  state = {
+const EditDetails = (props) => {
+  const [editInfo, setEditInfo] = useState({
     bio: "",
     website: "",
     location: "",
-    open: false,
+  });
+  const [dialogOpen, setOpen] = useState(false);
+
+  useEffect(() => {
+    const { credentials } = props;
+    mapUserDetailsToState(props.credentials);
+  }, []);
+
+  const handleOpen = () => {
+    setOpen( true );
+    mapUserDetailsToState(props.credentials);
   };
 
-  componentDidMount() {
-    const { credentials } = this.props;
-    this.mapUserDetailsToState(this.props.credentials);
-  }
-
-  handleOpen = () => {
-    this.setState({ open: true });
-    this.mapUserDetailsToState(this.props.credentials);
-  };
-  handleClose = () => {
-    this.setState({ open: false });
+  const handleClose = () => {
+    setOpen( false );
   };
 
-  mapUserDetailsToState = (credentials) => {
-    this.setState({
+  const mapUserDetailsToState = (credentials) => {
+    setEditInfo({
       bio: credentials.bio ? credentials.bio : "",
       website: credentials.website ? credentials.website : "",
       location: credentials.location ? credentials.location : "",
     });
   };
 
-  handleChange = (event) => {
-    this.setState({
+  const handleChange = (event) => {
+    setEditInfo({
+      ...editInfo,
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = () => {
+  const handleSubmit = () => {
     const userDetails = {
-      bio: this.state.bio,
-      website: this.state.website,
-      location: this.state.location,
+      bio: editInfo.bio,
+      website: editInfo.website,
+      location: editInfo.location,
     };
-    this.props.editUserDetails(userDetails);
-    this.handleClose();
+    props.editUserDetails(userDetails);
+    handleClose();
   };
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <Fragment>
-        <MyButton
-          tip="Edit detils"
-          onClick={this.handleOpen}
-          btnClassName={classes.button}
-        >
-          <EditIcon color="primary" />
-        </MyButton>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth
-          maxWidth="sm"
-        >
-          <DialogTitle>Edit your details</DialogTitle>
-          <DialogContent>
-            <form>
-              <TextField
-                name="bio"
-                type="text"
-                label="Bio"
-                multiline
-                rows="3"
-                placeholder="A short bio about yourself"
-                className={classes.textField}
-                value={this.state.bio}
-                onChange={this.handleChange}
-                fullWidth
-              />
-              <TextField
-                name="website"
-                type="text"
-                label="Website"
-                placeholder="Your personal/professional website"
-                className={classes.textField}
-                value={this.state.website}
-                onChange={this.handleChange}
-                fullWidth
-              />
-              <TextField
-                name="location"
-                type="text"
-                label="Location"
-                placeholder="where you live"
-                className={classes.textField}
-                value={this.state.location}
-                onChange={this.handleChange}
-                fullWidth
-              />
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Fragment>
-    );
-  }
-}
+  const { classes } = props;
+  return (
+    <Fragment>
+      <MyButton
+        tip="Edit detils"
+        onClick={handleOpen}
+        btnClassName={classes.button}
+      >
+        <EditIcon color="primary" />
+      </MyButton>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>Edit your details</DialogTitle>
+        <DialogContent>
+          <form>
+            <TextField
+              name="bio"
+              type="text"
+              label="Bio"
+              multiline
+              rows="3"
+              placeholder="A short bio about yourself"
+              className={classes.textField}
+              value={editInfo.bio}
+              onChange={handleChange}
+              fullWidth
+            />
+            <TextField
+              name="website"
+              type="text"
+              label="Website"
+              placeholder="Your personal/professional website"
+              className={classes.textField}
+              value={editInfo.website}
+              onChange={handleChange}
+              fullWidth
+            />
+            <TextField
+              name="location"
+              type="text"
+              label="Location"
+              placeholder="where you live"
+              className={classes.textField}
+              value={editInfo.location}
+              onChange={handleChange}
+              fullWidth
+            />
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Fragment>
+  );
+};
 
 const mapStatToProps = (state) => ({
   credentials: state.user.credentials,
