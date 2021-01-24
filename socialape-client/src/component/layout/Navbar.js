@@ -14,40 +14,38 @@ import Notifications from "./Notifications";
 
 //{} 쓰면 전체를 로딩하니 그러지 말자
 
-class Navbar extends Component {
-  render() {
-    const { authenticated } = this.props;
-    return (
-      <AppBar>
-        <Toolbar className="nav-container">
-          {authenticated ? (
-            <Fragment>
-              <PostScream />
-              <Link to="/">
-                <MyButton tip="Home">
-                  <HomeIcon color="primary" />
-                </MyButton>
-              </Link>
-              <Notifications />
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Button color="inherit" component={Link} to="/login">
-                Login
-              </Button>
-              <Button color="inherit" component={Link} to="/">
-                Home
-              </Button>
-              <Button color="inherit" component={Link} to="/signup">
-                Signup
-              </Button>
-            </Fragment>
-          )}
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+const Navbar = (props) => {
+  const { authenticated } = props;
+  return (
+    <AppBar>
+      <Toolbar className="nav-container">
+        {authenticated ? (
+          <Fragment>
+            <PostScream />
+            <Link to="/">
+              <MyButton tip="Home">
+                <HomeIcon color="primary" />
+              </MyButton>
+            </Link>
+            <Notifications />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+            <Button color="inherit" component={Link} to="/">
+              Home
+            </Button>
+            <Button color="inherit" component={Link} to="/signup">
+              Signup
+            </Button>
+          </Fragment>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 Navbar.propTypes = {
   authenticated: PropTypes.bool.isRequired,
