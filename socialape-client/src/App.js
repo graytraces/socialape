@@ -17,10 +17,10 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 import Navbar from "./component/layout/Navbar";
 
 //Pages
-import home from "./pages/home";
-import login from "./pages/login";
-import signup from "./pages/signup";
-import user from "./pages/user";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import User from "./pages/User";
 
 import axios from "axios";
 
@@ -51,14 +51,14 @@ export class App extends Component {
             <Navbar />
             <div className="container">
               <Switch>
-                <Route exact path="/" component={home}></Route>
-                <AuthRoute exact path="/login" component={login} />
-                <AuthRoute exact path="/signup" component={signup} />
-                <Route exact path="/users/:handle" component={user} />
+                <Route exact path="/" component={Home}></Route>
+                <AuthRoute exact path="/login" component={Login} />
+                <AuthRoute exact path="/signup" component={Signup} />
+                <Route exact path="/users/:handle" component={User} />
                 <Route
                   exact
                   path="/users/:handle/scream/:screamId"
-                  component={user}
+                  component={User}
                 />
               </Switch>
             </div>
