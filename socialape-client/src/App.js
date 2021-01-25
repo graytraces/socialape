@@ -42,31 +42,29 @@ if (token) {
   }
 }
 
-export class App extends Component {
-  render() {
-    return (
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Router>
-            <Navbar />
-            <div className="container">
-              <Switch>
-                <Route exact path="/" component={Home}></Route>
-                <AuthRoute exact path="/login" component={Login} />
-                <AuthRoute exact path="/signup" component={Signup} />
-                <Route exact path="/users/:handle" component={User} />
-                <Route
-                  exact
-                  path="/users/:handle/scream/:screamId"
-                  component={User}
-                />
-              </Switch>
-            </div>
-          </Router>
-        </Provider>
-      </MuiThemeProvider>
-    );
-  }
-}
+const App = () => {
+  return (
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router>
+          <Navbar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Home}></Route>
+              <AuthRoute exact path="/login" component={Login} />
+              <AuthRoute exact path="/signup" component={Signup} />
+              <Route exact path="/users/:handle" component={User} />
+              <Route
+                exact
+                path="/users/:handle/scream/:screamId"
+                component={User}
+              />
+            </Switch>
+          </div>
+        </Router>
+      </Provider>
+    </MuiThemeProvider>
+  );
+};
 
 export default App;
